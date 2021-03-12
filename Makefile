@@ -9,13 +9,21 @@ SHELL	=	bash
 
 VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="valgrind.supp"
 
-NAME 	=	ft_ssl_md5
+NAME 	=	ft_ssl
 LIBFT	=	libft
 SRCDIR	=	srcs
 INCDIR	=	includes
 OBJDIR	=	objs
 
 FILES	=	main.c				\
+			usage.c				\
+			args.c				\
+			mode.c				\
+			utils.c				\
+			ssl.c				\
+			md5.c				\
+			sha256.c			\
+			opts.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
