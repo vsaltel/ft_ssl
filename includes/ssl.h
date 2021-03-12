@@ -45,9 +45,9 @@ int				check_mode(char *mode);
 ** srcs/args.c
 */
 
-void		set_args(t_args **beg, int argn, int argc, char **argv, int content_type);
-void		free_args(t_args *args);
-t_args		*arg_from_fd(int fd);
+void			set_args(t_args **beg, int argn, int argc, char **argv, int content_type);
+void			free_args(t_args *args);
+t_args			*arg_from_fd(int fd);
 
 /*
 ** srcs/usage.c
