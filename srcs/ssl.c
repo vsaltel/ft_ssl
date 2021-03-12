@@ -20,7 +20,7 @@ static void	hash_exec(t_ssl ssl, t_args *arg)
 
 	hash = NULL;
 	if (ssl.md5)
-		hash = md5(arg->content);
+		hash = md5((uint8_t *)arg->content, ft_strlen(arg->content));
 	else if (ssl.sha256)
 		hash = sha256(arg->content);
 	print_hash(ssl, arg, hash);

@@ -30,6 +30,24 @@ int		ft_printf(char *format, ...)
 	return (ret);
 }
 
+char	*ft_sprintf(char *format, ...)
+{
+	va_list	arg;
+	t_arg	*alst;
+	char	*ret;
+
+	if (format == NULL)
+		return (NULL);
+	va_start(arg, format);
+	parse_args(format, &alst, &arg);
+	if (alst == NULL)
+		return (ft_strdup(format));
+	ret = get_all(1, format, alst);
+	va_end(arg);
+	del_list(&alst);
+	return (ret);
+}
+
 int		ft_dprintf(int fd, char *format, ...)
 {
 	va_list	arg;

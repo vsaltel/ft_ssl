@@ -72,8 +72,10 @@ typedef struct				s_print_state
 
 int							ft_printf(char *format, ...);
 int							ft_dprintf(int fd, char *format, ...);
+char						*ft_sprintf(char *format, ...);
 
 size_t						write_all(int fd, char *format, t_arg *alst);
+char						*get_all(int fd, char *format, t_arg *alst);
 void						parse_args(char *format, t_arg **alst,
 													va_list *args);
 void						parse_size(char *format, size_t i, t_arg *arg);

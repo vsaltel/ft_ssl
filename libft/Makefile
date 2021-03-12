@@ -122,6 +122,7 @@ FILES 	=	ft_2dstrnew.c						\
 			edit_string.c						\
 			printf/ft_printf.c					\
 			printf/display.c					\
+			printf/format.c						\
 			printf/arg_parser.c					\
 			printf/size_parser.c				\
 			printf/arg_filler.c					\
