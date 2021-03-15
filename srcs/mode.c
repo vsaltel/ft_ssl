@@ -1,6 +1,6 @@
 #include "ssl.h"
 
-char			*get_mode(t_ssl ssl, int maj)
+char	*get_mode(t_ssl ssl, int maj)
 {
 	if (ssl.md5)
 	{
@@ -14,22 +14,27 @@ char			*get_mode(t_ssl ssl, int maj)
 			return ("SHA256");
 		return ("sha256");
 	}
-	return (NULL);	
+	return (NULL);
 }
 
-void			set_mode(t_ssl *ssl, char *mode)
+int		set_mode(t_ssl *ssl, char *mode)
 {
 	if (!strcmp("md5", mode))
+	{
 		ssl->md5 = 1;
+		return (1);
+	}
 	else if (!strcmp("sha256", mode))
+	{
 		ssl->sha256 = 1;
+		return (1);
+	}
+	ft_dprintf(2, "ft_ssl: Error: '%s' is an invalid command.\n", mode); 
+	return (0);
 }
 
-int				check_mode(char *mode)
+void				init_mode(t_ssl *ssl)
 {
-	if (!strcmp("md5", mode))
-		return (1);	
-	else if (!strcmp("sha256", mode))
-		return (2);	
-	return (0);	
+	ssl->md5 = 0;
+	ssl->sha256 = 0;
 }

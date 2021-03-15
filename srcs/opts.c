@@ -1,57 +1,45 @@
 #include "ssl.h"
 
-static void		set_opt(t_ssl *ssl, char o)
+void	s_opt(t_ssl *ssl, int *an, int ac, char **av)
 {
-	if (o == 'p')
-		ssl->p = 1;
-	else if (o == 'q')
-		ssl->q = 1;
-	else if (o == 'r')
-		ssl->r = 1;
-	else if (o == 's')
-		ssl->s = 1;
-}
+	t_args	*curr;
+	int		i;
 
-void			get_opts(t_ssl *ssl, int an, int ac, char **av)
-{
-	int		x;
-
-	while (an < ac && av[an][0] && av[an][0] == '-')
+	ssl->s = 1;
+	i = 0;
+	while (av[*an][i] && av[*an][i] != 's')
+		i++;
+	if (av[*an][i + 1])
+		curr = new_arg(NULL, ft_strdup(av[*an] + i + 1));
+	else if (*an + 1 < ac)
+		curr = new_arg(NULL, ft_strdup(av[++(*an)]));
+	else
 	{
-		x = 1;
-		while (av[an][x])
-		{
-			set_opt(ssl, av[an][x]);
-			x++;
-		}
-		an++;
+		ft_dprintf(2, "ft_ssl: %s: option requires an argument -- s\n", get_mode(*ssl, 0));
+		print_usage();
+		exit(1);
 	}
-}
-
-int				check_opts(int an, int ac, char **av)
-{
-	int		x;
-
-	while (an < ac && av[an][0] && av[an][0] == '-')
-	{
-		x = 1;
-		while (av[an][x])
-		{
-			if (!strchr(OPTIONS, av[an][x]))
-				return (1);
-			x++;
-		}
-		an++;
-	}
-	return (0);
-}
-
-void			init_ssl(t_ssl *ssl)
-{
-	ssl->p = 0;
-	ssl->q = 0;
-	ssl->r = 0;
+	hash(ssl, curr);
+	free_arg(curr);
 	ssl->s = 0;
-	ssl->md5 = 0;
-	ssl->sha256 = 0;
+	ssl->printed++;
+}
+
+void	p_opt(t_ssl *ssl)
+{
+	t_args	*curr;
+
+	ssl->p = 1;
+	curr = arg_from_fd(0);
+	hash(ssl, curr);
+	free_arg(curr);
+	ssl->p = 0;
+	ssl->printed++;
+}
+
+void	unknown_opt(t_ssl ssl, int i, char *arg)
+{
+	ft_dprintf(2, "ft_ssl: %s: illegal option -- %c\n", get_mode(ssl, 0), arg[i]);
+	print_usage();
+	exit(1);
 }

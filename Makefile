@@ -18,12 +18,13 @@ OBJDIR	=	objs
 FILES	=	main.c				\
 			usage.c				\
 			args.c				\
+			args_utils.c		\
+			opts.c				\
 			mode.c				\
 			utils.c				\
 			ssl.c				\
 			md5.c				\
-			sha256.c			\
-			opts.c
+			sha256.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

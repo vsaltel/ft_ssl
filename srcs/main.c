@@ -1,64 +1,37 @@
 #include "ssl.h"
 
-int		check(int argc, char **argv)
+static void		arg_loop(t_ssl *ssl, int an, int ac, char **av)
 {
-	if (argc < 2)
+	t_args	*arg;
+
+	while (an < ac)
 	{
-		print_usage();
-		return (1);
+		arg = get_arg(ssl, &an, ac, av);
+		if (arg)
+		{
+			hash(ssl, arg);
+			ssl->printed++;
+			free_arg(arg);
+		}
+		an++;
 	}
-	if (!check_mode(argv[1]))
+	if (!ssl->printed)
 	{
-		print_mode_err(argv[1]);
-		return (2);
+		ssl->printed = -1;
+		arg = arg_from_fd(0);
+		hash(ssl, arg);
+		free_arg(arg);
 	}
-	if (check_opts(2, argc, argv))
-	{
-		print_usage();
-		return (3);
-	}
-	return (0);
 }
 
-int		arg_from_stdin(t_ssl ssl, t_args **args)
-{
-	t_args	*tmp;
-
-	if (!args)
-		return (4);
-	if (!*args || ssl.p)
-	{
-		tmp = arg_from_fd(0);
-		if (!tmp)
-			return (5);
-		if (ssl.p)
-			ft_printf("%s", tmp->content);
-		if (args && *args)
-			tmp->next = *args;
-		*args = tmp;
-	}
-	return (0);
-}
-
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	t_ssl	ssl;
-	t_args	*args;
-	int		ret;
 
-	if ((ret = check(argc, argv)))
-		return (ret);
-	args = NULL;
-	init_ssl(&ssl);
-	set_mode(&ssl, argv[1]);
-	get_opts(&ssl, 2, argc, argv);
-	//print_mode(ssl);
-	//print_opts(ssl);
-	set_args(&args, 2, argc, argv, ssl.s);
-	if ((ret = arg_from_stdin(ssl, &args)))
-		return (ret);
-	//print_args(args);
-	hash_loop(&ssl, args);
-	free_args(args);
+	init_mode(&ssl);
+	init_opts(&ssl);
+	if (!set_mode(&ssl, argv[1]))
+		return (1);
+	arg_loop(&ssl, 2, argc, argv);
 	return (0);
 }

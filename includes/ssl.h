@@ -8,6 +8,8 @@
 
 typedef struct			s_ssl
 {
+	int				file_arg;
+	int				printed;
 	int				md5;
 	int				sha256;
 	int				p;
@@ -19,35 +21,34 @@ typedef struct			s_ssl
 
 typedef struct			s_args
 {
-	int				fd;
 	char			*file;
 	char			*content;
-	struct s_args	*next;
 }						t_args;
-
-/*
-** srcs/opts.c
-*/
-
-void			init_ssl(t_ssl *ssl);
-void			get_opts(t_ssl *ssl, int an, int ac, char **av);
-int				check_opts(int an, int ac, char **av);
 
 /*
 ** srcs/mode.c
 */
 
 char			*get_mode(t_ssl ssl, int maj);
-void			set_mode(t_ssl *ssl, char *mode);
+int				set_mode(t_ssl *ssl, char *mode);
+void			init_mode(t_ssl *ssl);
 int				check_mode(char *mode);
+
+
+/*
+** srcs/args_utils.c
+*/
+
+void			init_opts(t_ssl *ssl);
+t_args			*new_arg(char *file, char *content);
+void			free_arg(t_args *arg);
 
 /*
 ** srcs/args.c
 */
 
-void			set_args(t_args **beg, int argn, int argc, char **argv, int content_type);
-void			free_args(t_args *args);
 t_args			*arg_from_fd(int fd);
+t_args			*get_arg(t_ssl *ssl, int *an, int ac, char **av);
 
 /*
 ** srcs/usage.c
@@ -57,10 +58,18 @@ void			print_usage(void);
 void			print_mode_err(char *mode);
 
 /*
+** srcs/opts.c
+*/
+
+void			s_opt(t_ssl *ssl, int *an, int ac, char **av);
+void			p_opt(t_ssl *ssl);
+void			unknown_opt(t_ssl, int i, char *arg);
+
+/*
 ** srcs/ssl.c
 */
 
-void			hash_loop(t_ssl *ssl, t_args *args);
+void			hash(t_ssl *ssl, t_args *arg);
 
 /*
 ** srcs/sha256.c
