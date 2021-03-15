@@ -36,6 +36,7 @@ char	*md5(uint8_t *input, size_t input_len)
 
     new_len = ((((input_len + 8) / 64) + 1) * 64) - 8;
 	msg = malloc(new_len + 64);
+	ft_bzero(msg, new_len + 64);
 	ft_memcpy(msg, input, input_len);
 	msg[input_len] = 128;
 	bits_len = 8 * input_len;

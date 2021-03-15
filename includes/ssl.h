@@ -37,7 +37,7 @@ int				check_opts(int an, int ac, char **av);
 ** srcs/mode.c
 */
 
-char			*get_mode(t_ssl ssl);
+char			*get_mode(t_ssl ssl, int maj);
 void			set_mode(t_ssl *ssl, char *mode);
 int				check_mode(char *mode);
 
@@ -60,7 +60,7 @@ void			print_mode_err(char *mode);
 ** srcs/ssl.c
 */
 
-void			hash_loop(t_ssl ssl, t_args *args);
+void			hash_loop(t_ssl *ssl, t_args *args);
 
 /*
 ** srcs/sha256.c

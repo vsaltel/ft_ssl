@@ -1,11 +1,19 @@
 #include "ssl.h"
 
-char			*get_mode(t_ssl ssl)
+char			*get_mode(t_ssl ssl, int maj)
 {
 	if (ssl.md5)
-		return ("MD5");
+	{
+		if (maj)
+			return ("MD5");
+		return ("md5");
+	}
 	else if (ssl.sha256)
-		return ("SHA256");
+	{
+		if (maj)
+			return ("SHA256");
+		return ("sha256");
+	}
 	return (NULL);	
 }
 

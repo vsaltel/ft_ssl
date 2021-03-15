@@ -48,7 +48,6 @@ t_args				*arg_from_fd(int fd)
 
 	if (!(str = read_all(fd)))
 		return (NULL);
-	ft_putstr(str);
 	new = new_arg(NULL, str);
 	new->fd = 0;
 	return (new);

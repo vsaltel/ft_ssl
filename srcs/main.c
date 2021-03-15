@@ -31,6 +31,8 @@ int		arg_from_stdin(t_ssl ssl, t_args **args)
 		tmp = arg_from_fd(0);
 		if (!tmp)
 			return (5);
+		if (ssl.p)
+			ft_printf("%s", tmp->content);
 		if (args && *args)
 			tmp->next = *args;
 		*args = tmp;
@@ -56,7 +58,7 @@ int		main(int argc, char **argv)
 	if ((ret = arg_from_stdin(ssl, &args)))
 		return (ret);
 	//print_args(args);
-	hash_loop(ssl, args);
+	hash_loop(&ssl, args);
 	free_args(args);
 	return (0);
 }
