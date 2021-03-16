@@ -19,7 +19,8 @@ static void	print_hash(t_ssl *ssl, t_args *arg, char *hash)
 		else
 		{
 			if (ssl->s)
-				ft_printf("%s (%s) = %s\n", get_mode(*ssl, 1), add_dquote(&arg->content), hash);
+				ft_printf("%s (%s) = %s\n", get_mode(*ssl, 1),
+					add_dquote(&arg->content), hash);
 			else
 				ft_printf("%s (%s) = %s\n", get_mode(*ssl, 1), arg->file, hash);
 		}
@@ -39,18 +40,21 @@ static void	hash_exec(t_ssl *ssl, t_args *arg)
 	free(hash);
 }
 
-void		hash(t_ssl *ssl, t_args *arg)
+void	hash(t_ssl *ssl, t_args *arg)
 {
 	int	fd;
 
 	if (arg->file)
 	{
-		if ((fd = open(arg->file, O_RDONLY)) < 0)
+		fd = open(arg->file, O_RDONLY);
+		if (fd < 0)
 		{
-			ft_dprintf(2, "ft_ssl: %s: %s: Cannot open.\n", get_mode(*ssl, 0), arg->file);
+			ft_dprintf(2, "ft_ssl: %s: %s: Cannot open.\n",
+				get_mode(*ssl, 0), arg->file);
 			return ;
 		}
-		if (!(arg->content = read_all(fd)))
+		arg->content = read_all(fd);
+		if (!arg->content)
 			return ;
 		close(fd);
 	}

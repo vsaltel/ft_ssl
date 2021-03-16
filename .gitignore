@@ -1,0 +1,5 @@
+*.swp
+file
+ft_ssl
+objs
+libft/libft.a

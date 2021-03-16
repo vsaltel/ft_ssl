@@ -15,7 +15,8 @@ void	s_opt(t_ssl *ssl, int *an, int ac, char **av)
 		curr = new_arg(NULL, ft_strdup(av[++(*an)]));
 	else
 	{
-		ft_dprintf(2, "ft_ssl: %s: option requires an argument -- s\n", get_mode(*ssl, 0));
+		ft_dprintf(2, "ft_ssl: %s: option requires an argument -- s\n",
+			get_mode(*ssl, 0));
 		print_usage();
 		exit(1);
 	}
@@ -31,15 +32,18 @@ void	p_opt(t_ssl *ssl)
 
 	ssl->p = 1;
 	curr = arg_from_fd(0);
+	close(0);
 	hash(ssl, curr);
 	free_arg(curr);
 	ssl->p = 0;
 	ssl->printed++;
+	ssl->p_print++;
 }
 
 void	unknown_opt(t_ssl ssl, int i, char *arg)
 {
-	ft_dprintf(2, "ft_ssl: %s: illegal option -- %c\n", get_mode(ssl, 0), arg[i]);
+	ft_dprintf(2, "ft_ssl: %s: illegal option -- %c\n",
+		get_mode(ssl, 0), arg[i]);
 	print_usage();
 	exit(1);
 }

@@ -1,6 +1,19 @@
 #include "ssl.h"
 
-static void		arg_loop(t_ssl *ssl, int an, int ac, char **av)
+static void	empty_hash(t_ssl *ssl)
+{
+	int		tmp;
+	t_args	*arg;
+
+	tmp = ssl->printed;
+	ssl->printed = -1;
+	arg = new_arg(NULL, ft_strdup(""));
+	hash(ssl, arg);
+	free(arg);
+	ssl->printed = tmp;
+}
+
+static void	arg_loop(t_ssl *ssl, int an, int ac, char **av)
 {
 	t_args	*arg;
 
@@ -22,9 +35,11 @@ static void		arg_loop(t_ssl *ssl, int an, int ac, char **av)
 		hash(ssl, arg);
 		free_arg(arg);
 	}
+	if (ssl->printed == 1 && ssl->p_print && (ssl->q || ssl->r))
+		empty_hash(ssl);
 }
 
-int				main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_ssl	ssl;
 

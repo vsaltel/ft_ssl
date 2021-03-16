@@ -7,10 +7,12 @@ char	*read_all(int fd)
 	int		ret;
 
 	str = strdup("");
-	while ((ret = read(fd, &buf, BUFF_SIZE - 1)) > 0)
+	ret = read(fd, &buf, BUFF_SIZE - 1);
+	while (ret > 0)
 	{
 		buf[ret] = '\0';
-		str = ft_strfjoin(str, buf, str);	
+		str = ft_strfjoin(str, buf, str);
+		ret = read(fd, &buf, BUFF_SIZE - 1);
 	}
 	if (ret == -1)
 	{
@@ -30,9 +32,10 @@ char	*add_dquote(char **str)
 	if (!*str || !*str[0])
 		ft_strdup("\"\"");
 	len = strlen(*str);
-	if (!(new = malloc(len + 3)))
+	new = malloc(len + 3);
+	if (!new)
 		return (NULL);
-	new[0] = '"';	
+	new[0] = '"';
 	ft_strcpy(new + 1, *str);
 	new[len + 1] = '"';
 	new[len + 2] = '\0';

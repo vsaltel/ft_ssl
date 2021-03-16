@@ -17,7 +17,7 @@ char	*get_mode(t_ssl ssl, int maj)
 	return (NULL);
 }
 
-int		set_mode(t_ssl *ssl, char *mode)
+int	set_mode(t_ssl *ssl, char *mode)
 {
 	if (!strcmp("md5", mode))
 	{
@@ -29,11 +29,11 @@ int		set_mode(t_ssl *ssl, char *mode)
 		ssl->sha256 = 1;
 		return (1);
 	}
-	ft_dprintf(2, "ft_ssl: Error: '%s' is an invalid command.\n", mode); 
+	print_mode_err(mode);
 	return (0);
 }
 
-void				init_mode(t_ssl *ssl)
+void	init_mode(t_ssl *ssl)
 {
 	ssl->md5 = 0;
 	ssl->sha256 = 0;
