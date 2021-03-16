@@ -6,7 +6,7 @@ t_args	*arg_from_fd(int fd)
 	t_args	*new;
 
 	str = read_all(fd);
-	if (!fd)
+	if (!str)
 		return (NULL);
 	new = new_arg(NULL, str);
 	return (new);

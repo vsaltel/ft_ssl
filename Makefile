@@ -24,6 +24,7 @@ FILES	=	main.c				\
 			utils.c				\
 			ssl.c				\
 			md5.c				\
+			md5_utils.c			\
 			sha256.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
