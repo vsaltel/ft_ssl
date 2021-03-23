@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int		ft_tolower(int c)
+int	ft_tolower(int c)
 {
 	if (ft_isupper(c))
 		return (c + 32);
@@ -21,7 +21,7 @@ int		ft_tolower(int c)
 
 char	*ft_strlower(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

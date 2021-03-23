@@ -28,7 +28,7 @@ char	*format_res(t_hash hash)
 
 void	init_md5(t_hash *hash)
 {
-	hash = &(t_hash){
+	*hash = (t_hash){
 		.w = {
 		0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476},
 		.k = {

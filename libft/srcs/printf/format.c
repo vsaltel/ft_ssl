@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static char		*strnfjoin(char *p1, char *p2, int n, char *f)
+static char	*strnfjoin(char *p1, char *p2, int n, char *f)
 {
 	char	*res;
 	int		lp1;
@@ -26,10 +26,9 @@ static char		*strnfjoin(char *p1, char *p2, int n, char *f)
 	return (res);
 }
 
-static char		*get_buf(char **res, char buf[], t_printf_state *s)
+static char	*get_buf(char **res, char buf[], t_printf_state *s)
 {
 	*res = strnfjoin(*res, buf, s->index, *res);
-	//write(s->fd, buf, c);
 	buf[0] = '\0';
 	s->index = 0;
 	return (*res);
@@ -42,11 +41,13 @@ static size_t	get_arg(char **res, char buf[], t_printf_state *s)
 	if (!s->arg || s->arg->str == NULL)
 		return (s->index);
 	str_len = ft_strlen(s->arg->str);
-	if (s->arg->type == 'c' && s->arg->data.c == 0)
+	if (s->arg->type == 'c' && s->arg->u_data.c == 0)
 	{
 		get_buf(res, buf, s);
-		*res = strnfjoin(*res, s->arg->str,
-			s->arg->width == 0 ? 1 : s->arg->width, *res);
+		if (s->arg->width == 0)
+			*res = strnfjoin(*res, s->arg->str, 1, *res);
+		else
+			*res = strnfjoin(*res, s->arg->str, s->arg->width, *res);
 		return (s->index);
 	}
 	if (str_len >= BUFF_SIZE)
@@ -61,7 +62,8 @@ static size_t	get_arg(char **res, char buf[], t_printf_state *s)
 	return ((s->index = ft_strlen(buf)));
 }
 
-static char		*get_end(char **res, char buf[], char *format, t_printf_state *s)
+static char	*get_end(char **res, char buf[], char *format,
+	t_printf_state *s)
 {
 	if (ft_strlen(buf) > 0)
 		get_buf(res, buf, s);
@@ -69,32 +71,31 @@ static char		*get_end(char **res, char buf[], char *format, t_printf_state *s)
 	return (*res);
 }
 
-char			*get_all(int fd, char *format, t_arg *alst)
+char	*get_all(int i, char **res, char *format, t_arg *alst)
 {
 	t_printf_state	s;
 	char			buf[BUFF_SIZE + 1];
-	char			*res;
-	int				i;
 
+	s.fd = i;
 	i = 0;
-	s.fd = fd;
 	s.arg = alst;
 	s.index = 0;
 	s.c = 0;
-	res = ft_strdup("");
 	buf[0] = '\0';
 	while (format[i])
+	{
 		if (s.arg)
 		{
 			ft_strncat(buf, format + i, s.arg->index - i);
 			s.index += s.arg->index - i;
 			buf[s.index] = '\0';
-			s.index = get_arg(&res, buf, &s);
+			s.index = get_arg(res, buf, &s);
 			i = s.arg->end + 1;
 			s.arg = s.arg->next;
 		}
 		else
-			return (get_end(&res, buf, format + i, &s));
-	get_buf(&res, buf, &s);
-	return (res);
+			return (get_end(res, buf, format + i, &s));
+	}
+	get_buf(res, buf, &s);
+	return (*res);
 }

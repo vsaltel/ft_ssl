@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		ft_printf(char *format, ...)
+int	ft_printf(char *format, ...)
 {
 	va_list	arg;
 	t_arg	*alst;
@@ -35,6 +35,7 @@ char	*ft_sprintf(char *format, ...)
 	va_list	arg;
 	t_arg	*alst;
 	char	*ret;
+	char	*output;
 
 	if (format == NULL)
 		return (NULL);
@@ -42,13 +43,14 @@ char	*ft_sprintf(char *format, ...)
 	parse_args(format, &alst, &arg);
 	if (alst == NULL)
 		return (ft_strdup(format));
-	ret = get_all(1, format, alst);
+	output = ft_strdup("");
+	ret = get_all(1, &output, format, alst);
 	va_end(arg);
 	del_list(&alst);
 	return (ret);
 }
 
-int		ft_dprintf(int fd, char *format, ...)
+int	ft_dprintf(int fd, char *format, ...)
 {
 	va_list	arg;
 	t_arg	*alst;
