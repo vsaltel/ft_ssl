@@ -25,7 +25,8 @@ FILES	=	main.c				\
 			ssl.c				\
 			md5.c				\
 			md5_utils.c			\
-			sha256.c
+			sha256.c			\
+			sha256_utils.c
 
 SRCS	=	$(addprefix $(SRCDIR)/, $(FILES))
 OBJS	=	$(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

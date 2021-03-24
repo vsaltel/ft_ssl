@@ -70,18 +70,6 @@ void			unknown_opt(t_ssl ssl, int i, char *arg);
 void			hash(t_ssl *ssl, t_args *arg);
 
 /*
-** srcs/sha256.c
-*/
-
-char			*sha256(char *input);
-
-/*
-** srcs/md5.c
-*/
-
-char			*md5(uint8_t *input, size_t input_len);
-
-/*
 ** srcs/utils.c
 */
 

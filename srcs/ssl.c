@@ -1,5 +1,7 @@
 #include <fcntl.h>
 #include "ssl.h"
+#include "md5.h"
+#include "sha256.h"
 
 static void	print_hash(t_ssl *ssl, t_args *arg, char *hash)
 {
@@ -35,7 +37,7 @@ static void	hash_exec(t_ssl *ssl, t_args *arg)
 	if (ssl->md5)
 		hash = md5((uint8_t *)arg->content, ft_strlen(arg->content));
 	else if (ssl->sha256)
-		hash = sha256(arg->content);
+		hash = sha256(arg->content, ft_strlen(arg->content));
 	print_hash(ssl, arg, hash);
 	free(hash);
 }
