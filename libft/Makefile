@@ -21,6 +21,8 @@ INCDIR	=	includes
 OBJDIR	=	objs
 FILES 	=	ft_retfree.c						\
 			ft_memset.c							\
+			ft_tablen.c							\
+			ft_tabfree.c						\
 			ft_memalloc.c						\
 			ft_memdel.c							\
 			ft_memcpy.c							\

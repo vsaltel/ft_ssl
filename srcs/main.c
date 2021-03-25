@@ -13,7 +13,7 @@ static void	empty_hash(t_ssl *ssl)
 	ssl->printed = tmp;
 }
 
-static void	arg_loop(t_ssl *ssl, int an, int ac, char **av)
+void	arg_loop(t_ssl *ssl, int an, int ac, char **av)
 {
 	t_args	*arg;
 
@@ -43,10 +43,16 @@ int	main(int argc, char **argv)
 {
 	t_ssl	ssl;
 
+	if (argc < 2)
+	{
+		interactive_mode(&ssl);
+		return (0);
+	}
 	init_mode(&ssl);
 	init_opts(&ssl);
 	if (!set_mode(&ssl, argv[1]))
 		return (1);
-	arg_loop(&ssl, 2, argc, argv);
+	else
+		arg_loop(&ssl, 2, argc, argv);
 	return (0);
 }

@@ -8,6 +8,7 @@
 
 typedef struct s_ssl
 {
+	int				file_arg;
 	int				p_print;
 	int				printed;
 	int				md5;
@@ -78,5 +79,17 @@ char			*add_dquote(char **str);
 void			print_args(t_args *args);
 void			print_mode(t_ssl ssl);
 void			print_opts(t_ssl ssl);
+
+/*
+** srcs/interactive.c
+*/
+
+void			interactive_mode(t_ssl *ssl);
+
+/*
+** srcs/main.c
+*/
+
+void			arg_loop(t_ssl *ssl, int an, int ac, char **av);
 
 #endif

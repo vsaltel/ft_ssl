@@ -7,7 +7,7 @@ endif
 
 SHELL	=	bash
 
-VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all --suppressions="valgrind.supp"
+VALGRIND_ARGS = --leak-check=full --show-leak-kinds=all
 
 NAME 	=	ft_ssl
 LIBFT	=	libft
@@ -23,6 +23,7 @@ FILES	=	main.c				\
 			mode.c				\
 			utils.c				\
 			ssl.c				\
+			interactive.c		\
 			md5.c				\
 			md5_utils.c			\
 			sha256.c			\

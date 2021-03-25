@@ -20,6 +20,8 @@
 # include "get_next_line.h"
 
 int					ft_retfree(char **s, int ret);
+void				ft_tabfree(char **tab);
+int					ft_tablen(char **tab);
 
 void				*ft_memset(void *b, int c, size_t len);
 void				*ft_memalloc(size_t size);

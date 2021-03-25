@@ -37,13 +37,11 @@ static void	get_opt(t_ssl *ssl, int *an, int ac, char **av)
 
 t_args	*get_arg(t_ssl *ssl, int *an, int ac, char **av)
 {
-	static int	file_arg = 0;
-
-	if (!file_arg && av[*an][0] == '-')
+	if (!ssl->file_arg && av[*an][0] == '-')
 	{
 		get_opt(ssl, an, ac, av);
 		return (NULL);
 	}
-	file_arg = 1;
-	return (new_arg(strdup(av[*an]), NULL));
+	ssl->file_arg = 1;
+	return (new_arg(ft_strdup(av[*an]), NULL));
 }

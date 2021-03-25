@@ -19,12 +19,12 @@ char	*get_mode(t_ssl ssl, int maj)
 
 int	set_mode(t_ssl *ssl, char *mode)
 {
-	if (!strcmp("md5", mode))
+	if (!ft_strcmp("md5", mode))
 	{
 		ssl->md5 = 1;
 		return (1);
 	}
-	else if (!strcmp("sha256", mode))
+	else if (!ft_strcmp("sha256", mode))
 	{
 		ssl->sha256 = 1;
 		return (1);

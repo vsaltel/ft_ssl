@@ -2,6 +2,7 @@
 
 void	init_opts(t_ssl *ssl)
 {
+	ssl->file_arg = 0;
 	ssl->p_print = 0;
 	ssl->printed = 0;
 	ssl->p = 0;

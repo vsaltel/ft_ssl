@@ -6,7 +6,7 @@ char	*read_all(int fd)
 	char	*str;
 	int		ret;
 
-	str = strdup("");
+	str = ft_strdup("");
 	ret = read(fd, &buf, BUFF_SIZE - 1);
 	while (ret > 0)
 	{
@@ -31,7 +31,7 @@ char	*add_dquote(char **str)
 		return (NULL);
 	if (!*str || !*str[0])
 		ft_strdup("\"\"");
-	len = strlen(*str);
+	len = ft_strlen(*str);
 	new = malloc(len + 3);
 	if (!new)
 		return (NULL);

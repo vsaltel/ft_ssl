@@ -12,7 +12,7 @@ static void	handle_chunk(t_buffer_state *state, uint8_t *chunk,
 	{
 		left = space_in_chunk - TOTAL_LEN_LEN;
 		len = state->total_len;
-		memset(chunk, 0x00, left);
+		ft_memset(chunk, 0x00, left);
 		chunk += left;
 		chunk[7] = (uint8_t)(len << 3);
 		len >>= 5;
@@ -25,7 +25,7 @@ static void	handle_chunk(t_buffer_state *state, uint8_t *chunk,
 		state->total_len_delivered = 1;
 	}
 	else
-		memset(state->chunk, 0x00, space_in_chunk);
+		ft_memset(state->chunk, 0x00, space_in_chunk);
 }
 
 static int	calc_chunk(t_buffer_state *state, uint8_t *chunk)
@@ -36,12 +36,12 @@ static int	calc_chunk(t_buffer_state *state, uint8_t *chunk)
 		return (0);
 	if (state->len >= CHUNK_SIZE)
 	{
-		memcpy(chunk, state->p, CHUNK_SIZE);
+		ft_memcpy(chunk, state->p, CHUNK_SIZE);
 		state->p += CHUNK_SIZE;
 		state->len -= CHUNK_SIZE;
 		return (1);
 	}
-	memcpy(chunk, state->p, state->len);
+	ft_memcpy(chunk, state->p, state->len);
 	chunk += state->len;
 	space_in_chunk = CHUNK_SIZE - state->len;
 	state->p += state->len;
@@ -56,7 +56,7 @@ static int	calc_chunk(t_buffer_state *state, uint8_t *chunk)
 	return (1);
 }
 
-void	sha256_2(t_buffer_state *s, int i, int j)
+void	sha256_handle_ah(t_buffer_state *s, int i, int j)
 {
 	s->s1 = right_rot(s->ah[4], 6) ^ right_rot(s->ah[4], 11)
 		^ right_rot(s->ah[4], 25);
@@ -77,7 +77,7 @@ void	sha256_2(t_buffer_state *s, int i, int j)
 	s->ah[0] = s->temp1 + s->temp2;
 }
 
-void	sha256_1(t_buffer_state *s, int i, int j)
+void	sha256_handle_w(t_buffer_state *s, int i, int j)
 {
 	if (i == 0)
 	{
@@ -95,7 +95,7 @@ void	sha256_1(t_buffer_state *s, int i, int j)
 				& 0xf], 19) ^ (s->w[(j + 14) & 0xf] >> 10);
 		s->w[j] = s->w[j] + s->s0 + s->w[(j + 9) & 0xf] + s->s1;
 	}
-	sha256_2(s, i, j);
+	sha256_handle_ah(s, i, j);
 }
 
 char	*sha256(void *input, size_t len)
@@ -116,7 +116,7 @@ char	*sha256(void *input, size_t len)
 		{
 			j = -1;
 			while (++j < 16)
-				sha256_1(&s, i, j);
+				sha256_handle_w(&s, i, j);
 		}
 		i = -1;
 		while (++i < 8)
