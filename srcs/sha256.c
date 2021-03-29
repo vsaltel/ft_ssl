@@ -56,7 +56,7 @@ static int	calc_chunk(t_buffer_state *state, uint8_t *chunk)
 	return (1);
 }
 
-void	sha256_handle_ah(t_buffer_state *s, int i, int j)
+void	sha256_handle_ah(t_buffer_state *s, unsigned int i, unsigned int j)
 {
 	s->s1 = right_rot(s->ah[4], 6) ^ right_rot(s->ah[4], 11)
 		^ right_rot(s->ah[4], 25);
@@ -77,13 +77,13 @@ void	sha256_handle_ah(t_buffer_state *s, int i, int j)
 	s->ah[0] = s->temp1 + s->temp2;
 }
 
-void	sha256_handle_w(t_buffer_state *s, int i, int j)
+void	sha256_handle_w(t_buffer_state *s, unsigned int i, unsigned int j)
 {
 	if (i == 0)
 	{
-		s->w[j] = (uint32_t)s->p[0] << 24 | (uint32_t)s->p[1] << 16
-			| (uint32_t)s->p[2] << 8 | (uint32_t)s->p[3];
-		s->p += 4;
+		s->w[j] = (uint32_t)s->c[0] << 24 | (uint32_t)s->c[1] << 16
+			| (uint32_t)s->c[2] << 8 | (uint32_t)s->c[3];
+		s->c += 4;
 	}
 	else
 	{
@@ -100,14 +100,14 @@ void	sha256_handle_w(t_buffer_state *s, int i, int j)
 
 char	*sha256(void *input, size_t len)
 {
-	int				i;
-	int				j;
+	unsigned int	i;
+	unsigned int	j;
 	t_buffer_state	s;
 
 	init_buf_state(&s, input, len);
 	while (calc_chunk(&s, s.chunk))
 	{
-		s.p = s.chunk;
+		s.c = s.chunk;
 		i = -1;
 		while (++i < 8)
 			s.ah[i] = s.h[i];
